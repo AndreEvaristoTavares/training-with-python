@@ -4,10 +4,10 @@ def deposito(valor):
     global saldo_total
     try:
         if valor < 1:
-            print(f"valor {valor} não permitido...")
+            print(f"valor {format(valor, '.2f')} não permitido...")
         else:  
             saldo_total += valor
-            extrato.append(f"valor de R$ {valor} depositado \nsaldo atual R$ {saldo_total}")
+            extrato.append(f"valor de R$ {format(valor, '.2f')} depositado \nsaldo atual R$ {format(saldo_total, '.2f')}")
     except ValueError:
         print("valor inválido...")
 def saque(valor):
@@ -15,9 +15,9 @@ def saque(valor):
     try:
         if saldo_total >= valor:
             saldo_total -= valor
-            extrato.append(f"valor de R$ {valor} sacado, \nsaldo atual R$ {saldo_total}")
+            extrato.append(f"valor de R$ {format(valor, '.2f')} sacado, \nsaldo atual R$ {format(saldo_total, '.2f')}")
         elif valor < 1:
-            print(f"valor {valor} não permitido...")
+            print(f"valor {format(valor, '.2f')} não permitido...")
         else:
             print("saldo insuficiente...")
     except ValueError:
