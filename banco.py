@@ -1,51 +1,54 @@
 import random
-saldo_total = 0
-conta = {}
-titular = {}
-extrato = []
+class Conta:
+    def __init__(self, titular):
+        self.titular = titular
+        self.saldo = 0
+        self.conta = random.randint(1000, 9999)
+        self.extrato = []
+    def deposito(self, valor):
+        try:
+            if valor < 1:
+                print(f"valor {format(valor, '.2f')} não permitido...")
+            else:
+                self.saldo += valor
+                self.extrato.append(
+                    f"valor de R$ {format(valor, '.2f')} depositado \nsaldo atual R$ {format(self.saldo, '.2f')}")
+        except ValueError:
+            print("valor inválido...")
 
-def recebe_dados(cpf, nome, endereco, conta):
-    titular[cpf] = {'nome': nome, 'endereco': endereco, 'conta':conta}
+    def saque(self, valor):
+        try:
+            if self.saldo >= valor:
+                self.saldo -= valor
+                self.extrato.append(
+                    f"valor de R$ {format(valor, '.2f')} sacado, \nsaldo atual R$ {format(self.saldo, '.2f')}")
+            elif valor < 1:
+                print(f"valor {format(valor, '.2f')} não permitido...")
+            else:
+                print("saldo insuficiente...")
+        except ValueError:
+            print("valor inválido...")
 
+    def exibir_extrato(self):
+        print()
+        for e in self.extrato:
+            print(e)
+        print()
 
-def deposito(valor):
-    global saldo_total
-    try:
-        if valor < 1:
-            print(f"valor {format(valor, '.2f')} não permitido...")
-        else:  
-            saldo_total += valor
-            extrato.append(f"valor de R$ {format(valor, '.2f')} depositado \nsaldo atual R$ {format(saldo_total, '.2f')}")
-    except ValueError:
-        print("valor inválido...")
-def saque(valor):
-    global saldo_total
-    try:
-        if saldo_total >= valor:
-            saldo_total -= valor
-            extrato.append(f"valor de R$ {format(valor, '.2f')} sacado, \nsaldo atual R$ {format(saldo_total, '.2f')}")
-        elif valor < 1:
-            print(f"valor {format(valor, '.2f')} não permitido...")
-        else:
-            print("saldo insuficiente...")
-    except ValueError:
-        print("valor inválido...")
-def exibir_extrato():
-    print()
-    for e in extrato:
-        print(e)
-    print()
-
+class Titular:
+    def __init__(self, cpf, nome, endereco):
+        self.cpf = cpf
+        self.nome = nome
+        self.endereco = endereco
 while True:
     opcao = int(input("cadastro de titular aperte 1 - continuar, aperte 0 - sair:  "))
     if opcao == 1:
-        conta = random.randint(1000, 9999)
-        recebe_dados(
+        titular = Titular(
             input("digite o cpf: "),
             input("digite o nome: "),
-            input("digite o endereço completo: "), 
-            conta
-            )
+            input("digite o endereço completo: ")
+        )
+        conta = Conta(titular)
         continue
     elif opcao == 0:
         print("adeus...")
@@ -53,18 +56,20 @@ while True:
     else:
         print('opcao invalida')
 while True:
+
     operacao = input('digite a operação que deseja fazer: \nD = deposito, \nS = saque, \nE = extrato, \nX = sair \n')
     if operacao == 'd':
         try:
-            deposito(float(input('Digite um valor para depositar: ')))
+            conta.deposito(float(input('Digite um valor para depositar: ')))
+
         except ValueError:
             print("valor invalido")          
         continue
-    elif operacao == 's': 
-        saque(float(input('Digite um valor para sacar: ')) )
+    elif operacao == 's':
+        conta.saque(float(input('Digite um valor para sacar: ')))
         continue
     elif operacao == 'e':
-        exibir_extrato()
+        conta.exibir_extrato()
         continue
     elif operacao == 'x':
         print("saindo...")
