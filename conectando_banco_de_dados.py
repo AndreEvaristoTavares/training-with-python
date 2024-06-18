@@ -1,26 +1,40 @@
-import sqlite3
-from pathlib import Path
-
-ROOT_DIR = Path(__file__).parent
-DB_NAME = 'db.sqlite3'
-DB_FILE =  ROOT_DIR / DB_NAME
+import pymysql
+import pymysql.cursors
+HOST = 'localhost'
+PORT = 3306
+USER = 'root'
+PASSWORD = 'root'
+DB_NAME = 'portaria'
 TABLE_NAME = 'moradores'
-connection = sqlite3.connect(DB_FILE)
+
+connection = pymysql.connect(
+    host=HOST,
+    port=PORT,
+    user=USER,
+    passwd=PASSWORD,
+    database=DB_NAME,
+    cursorclass=pymysql.cursors.DictCursor
+)
+
 cursor = connection.cursor()
 def criar_tabela():
-    cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}(ID INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, ap INTEGER)')
+    cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}(ID INTEGER PRIMARY KEY AUTO_INCREMENT, name TEXT, ap INTEGER)')
     connection.commit()
 
 def adicionar_morador(nome, ap):
-    inserir = f'INSERT INTO {TABLE_NAME} (name, ap) VALUES (?, ?)'
+    inserir = f'INSERT INTO {TABLE_NAME} (name, ap) VALUES (%s, %s)'
     cursor.execute(inserir, [nome, ap])
     connection.commit()
 
 def visualizar():
     cursor.execute(f'SELECT * FROM {TABLE_NAME}')
-    for row in cursor.fetchall():
-        _id, name, ap = row
-        print(_id, name, ap)
+    rows = cursor.fetchall()
+    if rows:
+        print("ID\tNome\tAP")
+        for row in rows:
+            print(f"{row['ID']}\t{row['name']}\t{row['ap']}")
+    else:
+        print("Não há moradores cadastrados.")
     
 def deletar_morador(id):
     cursor.execute(f'DELETE FROM {TABLE_NAME} WHERE id = {id}')
