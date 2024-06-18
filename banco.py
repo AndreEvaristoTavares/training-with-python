@@ -40,6 +40,7 @@ class Titular:
         self.cpf = cpf
         self.nome = nome
         self.endereco = endereco
+
 while True:
     opcao = int(input("cadastro de titular aperte 1 - continuar, aperte 0 - sair:  "))
     if opcao == 1:
@@ -55,6 +56,7 @@ while True:
         break
     else:
         print('opcao invalida')
+
 while True:
 
     operacao = input('digite a operação que deseja fazer: \nD = deposito, \nS = saque, \nE = extrato, \nX = sair \n')
