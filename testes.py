@@ -4,7 +4,7 @@ import pymysql
 host = 'localhost'  # ou o endereço do seu servidor MySQL
 user = 'root'
 password = 'root'
-database = 'world'
+database = 'portaria'
 
 try:
     # Conectar ao banco de dados
@@ -16,11 +16,13 @@ try:
 
     # Exemplo de consulta
     with connection.cursor() as cursor:
-        sql = "SELECT * FROM city;"
+        print("conexão bem suscedida...")
+        sql = "SELECT * FROM moradores;"
         cursor.execute(sql)
         result = cursor.fetchall()
         for row in result:
             print(row)
+        
 
 except pymysql.MySQLError as e:
     print(f"Erro ao conectar ao MySQL: {e}")

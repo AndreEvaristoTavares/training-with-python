@@ -1,5 +1,7 @@
 import pymysql
 import pymysql.cursors
+import dotenv
+dotenv.load_dotenv()
 HOST = 'localhost'
 PORT = 3306
 USER = 'root'
@@ -43,7 +45,7 @@ def deletar_morador(id):
 def fechar_conexao_com_banco():
     cursor.close()
     connection.close()
-    print("conexão feixada")
+    print("conexão encerrada...")
 
 criar_tabela()
 connection.commit()
