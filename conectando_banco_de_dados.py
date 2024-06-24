@@ -1,7 +1,5 @@
-import pymysql
 import pymysql.cursors
-import dotenv
-dotenv.load_dotenv()
+import pymysql.cursors
 HOST = 'localhost'
 PORT = 3306
 USER = 'root'
@@ -32,9 +30,9 @@ def visualizar():
     cursor.execute(f'SELECT * FROM {TABLE_NAME}')
     rows = cursor.fetchall()
     if rows:
-        print("ID\tNome\tAP")
         for row in rows:
-            print(f"{row['ID']}\t{row['name']}\t{row['ap']}")
+            print(f"ID: {row['ID']} Nome: {row['name']} AP: {row['ap']}")
+            print()
     else:
         print("Não há moradores cadastrados.")
     
