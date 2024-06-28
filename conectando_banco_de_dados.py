@@ -45,12 +45,12 @@ class Morador:
             else:
                 print("Não há moradores cadastrados.")
     
-    def deletar_morador(id):
+    def deletar_morador(self, id):
             sql_delete = f'DELETE FROM {TABLE_NAME} WHERE id = %s'
             self.cursor.execute(sql_delete, id)
             self.connection.commit()
 
-    def fechar_conexao_com_banco():
+    def fechar_conexao_com_banco(self):
             self.cursor.close()
             self.connection.close()
             print("conexão encerrada...")
