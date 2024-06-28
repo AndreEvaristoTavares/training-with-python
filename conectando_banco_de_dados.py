@@ -22,8 +22,8 @@ def criar_tabela():
     connection.commit()
 
 def adicionar_morador(nome, ap):
-    inserir = f'INSERT INTO {TABLE_NAME} (name, ap) VALUES (%s, %s)'
-    cursor.execute(inserir, [nome, ap])
+    sql_inserir = f'INSERT INTO {TABLE_NAME} (name, ap) VALUES (%s, %s)'
+    cursor.execute(sql_inserir, [nome, ap])
     connection.commit()
 
 def visualizar():
@@ -37,7 +37,8 @@ def visualizar():
         print("Não há moradores cadastrados.")
     
 def deletar_morador(id):
-    cursor.execute(f'DELETE FROM {TABLE_NAME} WHERE id = {id}')
+    sql_delete = f'DELETE FROM {TABLE_NAME} WHERE id = %s'
+    cursor.execute(sql_delete, id)
     connection.commit()
 
 def fechar_conexao_com_banco():
