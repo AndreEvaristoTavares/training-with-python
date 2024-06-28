@@ -26,6 +26,10 @@ def adicionar_morador(nome, ap):
     cursor.execute(sql_inserir, [nome, ap])
     connection.commit()
 
+def atualizar_morador(id, nome, ap):
+    sql_atualizar = f'UPDATE {TABLE_NAME} SET name=%s, ap=%s WHERE ID=%s'
+    cursor.execute(sql_atualizar, [nome, ap, id])
+    connection.commit()
 def visualizar():
     cursor.execute(f'SELECT * FROM {TABLE_NAME}')
     rows = cursor.fetchall()
@@ -60,7 +64,12 @@ while True:
         visualizar()
         continue
     elif opcao == 'u':
-        print("update")
+        print('atualizar pelo id')
+        id_morador = int(input("digite o id: "))
+        nome_morador = str(input("digite o nome: "))
+        numero_ap = int(input("digite o numero do ap: "))
+        atualizar_morador(id_morador, nome_morador, numero_ap)
+
         continue
     elif opcao =='d':
         id = int(input("digite o id para deletar: "))
