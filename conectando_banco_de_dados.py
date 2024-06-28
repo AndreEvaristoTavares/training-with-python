@@ -7,7 +7,7 @@ PASSWORD = 'root'
 DB_NAME = 'portaria'
 TABLE_NAME = 'moradores'
 class Morador:
-    def __init__(self) -> None:
+    def __init__(self):
         
         self.connection = pymysql.connect(
             host=HOST,
@@ -20,7 +20,8 @@ class Morador:
 
         self.cursor = self.connection.cursor()
     def criar_tabela(self):
-            self.cursor.execute(f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}(ID INTEGER PRIMARY KEY AUTO_INCREMENT, name TEXT, ap INTEGER)')
+            sql_create = f'CREATE TABLE IF NOT EXISTS {TABLE_NAME}(ID INTEGER PRIMARY KEY AUTO_INCREMENT, name TEXT, ap INTEGER)'
+            self.cursor.execute(sql_create)
             self.connection.commit()
 
     def adicionar_morador(self, nome, ap):
